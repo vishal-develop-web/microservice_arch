@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",                           // Modern JS features like async/await with good Node support
+    "module": "CommonJS",                         // Node.js mein CommonJS module format chalta hai
+    "outDir": "./dist",                           // Build output folder
+    "rootDir": "./src",                           // Source code folder
+    "strict": true,                               // All strict type-checking options enabled
+    "esModuleInterop": true,                      // Allow default imports from CommonJS modules
+    "forceConsistentCasingInFileNames": true,     // Prevent casing issues in imports
+    "skipLibCheck": true,                         // Skip type checking for node_modules
+    "resolveJsonModule": true,                    // Allow importing JSON files
+    "moduleResolution": "node",                   // Resolve modules like Node.js does
+    "allowSyntheticDefaultImports": true,         // Allow default imports even if not present
+    "sourceMap": true,                            // Generate source maps for debugging
+    "noImplicitAny": true,                        // Disallow implicit `any` types
+    "strictNullChecks": true,                     // Handle null/undefined properly
+    "noUnusedLocals": true,                       // Error for unused variables
+    "noUnusedParameters": true,                   // Error for unused function parameters
+    "noImplicitReturns": true,                    // Warn if a function doesn’t return on all paths
+    "noFallthroughCasesInSwitch": true            // Prevent accidental fallthrough in switch
+  },
+  "include": ["src"],                             // Include all files in src
+  "exclude": ["node_modules", "dist"]             // Don’t compile these folders
+}

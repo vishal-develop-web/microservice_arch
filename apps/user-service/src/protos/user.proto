@@ -1,0 +1,122 @@
+syntax = "proto3";
+package user_package;
+
+
+service User {
+  rpc Register(RegisterRequest) returns(RegisterResponse) {};
+  rpc ActivateUser(Token) returns(UserRes) {};
+  rpc Login(LoginRequest) returns(LoginResponse) {};
+  rpc GetUser(GetUserRequest) returns(GetUserResponse) {};
+  rpc SocialAuth(SocialReq) returns(LoginResponse) {};
+  rpc UpdateUserInfo(UpdateUserInfoReq) returns(UserRes) {};
+  rpc UpdateAvatar(AvatarReq) returns(UserRes) {};
+  rpc UpdatePassword(PasswordReq) returns(UserRes) {};
+  rpc UpdateCourseList(CourseList) returns(UserRes) {};
+  rpc GetUsersAnalytics(UserAnalytics) returns(UserAnalyticsRes) {};
+}
+
+message UserAnalytics{
+  string instructor_id = 1;
+}
+
+message MonthData {
+  string month = 1;
+  int32 count = 2;
+}
+
+message UserAnalyticsRes {
+  repeated MonthData data = 1;
+}
+
+message CourseList{
+  string course_id= 1;
+  string user_id = 2;
+}
+
+message PasswordReq{
+  string user_id = 1;
+  string old_password =2;
+  string new_password = 3;
+}
+
+message AvatarReq {
+  bytes data = 1;
+  string filename = 2;
+  string mimetype = 3;
+  string id = 4;
+}
+
+message UpdateUserInfoReq{
+  string user_id = 1;
+  string name = 2;
+}
+
+message SocialReq{
+  string email = 1;
+  string name = 2;
+  string avatar = 3;
+}
+
+message GetUserRequest{
+  string id = 1;
+}
+
+message GetUserResponse{
+  string id = 1;
+  string avatar = 3;
+  string email = 6;
+  string name = 2;
+  string role = 4;
+  string is_verified = 5;
+  repeated Courses courses = 7;
+}
+
+message Courses{
+  string course_id = 1;
+}
+
+message UserRes{
+  int32 status = 1;
+  string msg = 2;
+}
+
+message RegisterRequest {
+  string name = 1;
+  string email = 2;
+  string password = 3;
+  string avatar = 4;
+  string role = 5;
+}
+
+message RegisterResponse {
+  string msg = 1;
+  int32 status = 2;
+  Token data = 3;
+
+}
+message Token {
+  string token = 1;
+  string activation_code = 2;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+  User user = 3;
+  
+  message User{
+    string name = 1;
+    string email = 2;
+    string avatar = 3;
+    string role = 4;
+    string is_verified = 5;
+    repeated Courses courses = 6;
+  }
+}
+
+

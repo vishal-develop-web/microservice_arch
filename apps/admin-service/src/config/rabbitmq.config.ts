@@ -1,3 +1,4 @@
+
 import 'dotenv/config'
 
 (() => {
@@ -5,17 +6,13 @@ import 'dotenv/config'
         throw new Error("RABBITMQ_LINK environment variable is not set");
     }
 })();
-
-// RabbitMQ configuration file
 export default {
     rabbitMQ: {
         url: String(process.env.RABBITMQ_LINK),
         queues: {
-            instructorQueue: "instructor_queue",
-            courseQueue: "course_queue",
             adminQueue: "admin_queue",
-            orderQueue: "order_queue",
-            notificationQueue: "notification_queue"
+            userQueue: "user_queue"
         },
     },
 };
+

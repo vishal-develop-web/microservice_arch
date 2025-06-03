@@ -2,15 +2,14 @@ import CircuitBreaker from 'opossum';
 
 const MAX_RETRIES = 3;
 const BASE_RETRY_DELAY = 1000;
-
 export async function retryAndBreakerOperation<T>(
     operation: () => Promise<T>
-) {
+): Promise<T> {
     let retries = 0;
     let retryDelay = BASE_RETRY_DELAY;
     let circuitBreakerOpened = false;
 
-    const increaseRetryDelay = () => {
+   const increaseRetryDelay = () => { 
         retryDelay *= 2;
         return Math.min(retryDelay, 60000);
     };
@@ -56,7 +55,5 @@ export async function retryAndBreakerOperation<T>(
             }
         }
     }
-
-
-    circuitBreaker.open();
+    throw new Error('Operation failed after maximum retries');
 }

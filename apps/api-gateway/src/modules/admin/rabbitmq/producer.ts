@@ -14,8 +14,7 @@ class Producer {
         this.replyQueueName = replyQueueName;
         this.eventEmitter = eventEmitter;
     }
-
-    public produceMessage(data: any, operation: string) {
+    public produceMessage(data: any, operation: string): Promise<any> {
         try {
             const uuid = randomUUID();
             this.channel.sendToQueue(rabbitmqConfig.rabbitMQ.queues.adminQueue, Buffer.from(JSON.stringify(data)), {
@@ -26,17 +25,16 @@ class Producer {
                     function: operation
                 }
             })
-            console.log(`Message sent to queue: ${rabbitmqConfig.rabbitMQ.queues.adminQueue} with operation: ${operation}`, data);
-
             return new Promise((res, rej) => {
                 this.eventEmitter.once(uuid, async (data) => {
+
                     const reply = JSON.parse(data.content.toString());
+
                     if (reply.error) {
                         rej(new Error("RabbitMQ error"));
                     } else {
                         res(data);
                     }
-                    res(data);
                 });
             });
 
@@ -48,8 +46,10 @@ class Producer {
                 operation: operation,
                 data: data
             });
+            return Promise.reject(error); // ✅ Fix: Return a rejected Promise
         }
     }
+
 
 }
 

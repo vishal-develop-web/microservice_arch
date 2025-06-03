@@ -18,7 +18,6 @@ class Consumer {
             await this.channel.consume(this.replyQueueName, (msg) => {
                 if (msg !== null) {
                     this.eventEmitter.emit(msg.properties.correlationId, msg);
-                    this.channel.ack(msg);
                 }
             }, { noAck: true });
             console.log(`Consumer is listening on queue: ${this.replyQueueName}`);

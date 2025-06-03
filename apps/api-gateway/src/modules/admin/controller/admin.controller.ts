@@ -18,7 +18,9 @@ export default class AdminController {
   ) => {
     try {
       const operation = "get-all-users";
-      const response: any = await retryAndBreakerOperation(() => AdminRabbitMQClient.produce(null, operation));
+
+      const response: any = await AdminRabbitMQClient.produce(null, operation);
+
       res.status(StatusCode.OK).json(JSON.parse(response.content.toString()));
     } catch (e: any) {
       next(e);

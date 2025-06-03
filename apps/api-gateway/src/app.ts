@@ -2,18 +2,18 @@ import express, { Application } from 'express';
 import http from 'node:http';
 import cors from 'cors';
 import adminRoute from './modules/admin/routes/admin.routes';
+import RabbitMqClient from "./modules/admin/rabbitmq/client";
 
 class App {
 
     private app: Application;
     private server: http.Server<typeof http.IncomingMessage, typeof http.ServerResponse>;
-
-
     constructor() {
         this.app = express();
         this.server = http.createServer(this.app);
         this.applyMiddleware();
         this.app_routes();
+        RabbitMqClient.initialize()
     }
 
     private applyMiddleware(): void {
